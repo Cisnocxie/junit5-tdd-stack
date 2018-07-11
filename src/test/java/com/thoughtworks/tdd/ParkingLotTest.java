@@ -3,6 +3,7 @@ package com.thoughtworks.tdd;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -43,4 +44,21 @@ public class ParkingLotTest {
 
         assertThat(parkingLot.unpark(receipt), is(theCar));
     }
+
+    @Test
+    public void should_get_the_wrong_car_when_unpark_given_park_receipt() {
+        ParkingLot parkingLot = new ParkingLot(1);
+        Car theCar = new Car();
+        Receipt receipt = null;
+        Receipt anotherReceipt = null;
+        try {
+            receipt = parkingLot.park(theCar);
+        } catch (Exception e) {
+            fail("should park successfully");
+        }
+
+        assertThat(parkingLot.unpark(anotherReceipt), not(theCar));
+    }
+
+
 }
