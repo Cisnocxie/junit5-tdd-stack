@@ -71,7 +71,7 @@ public class FuzzBuzzWhizzTest {
         assertThat(result, is("Buzz"));
     }
     @Test
-    public void should_return_Buzz_when_inputs_235() {
+    public void should_return_Fizz_when_inputs_235() {
         //given
         FizzBuzzWhizz fizzBuzzWhizz = new FizzBuzzWhizz();
         int number = 235;
@@ -80,7 +80,7 @@ public class FuzzBuzzWhizzTest {
         String result = fizzBuzzWhizz.getFizzBuzz(number);
 
         //then
-        assertThat(result, is("Buzz"));
+        assertThat(result, is("Fizz"));
     }
 
     @Test
@@ -135,7 +135,7 @@ public class FuzzBuzzWhizzTest {
     }
 
     @Test
-    public void should_return_BuzzWhizz_when_inputs_35() {
+    public void should_return_Fizz_when_inputs_35() {
         //given
         FizzBuzzWhizz fizzBuzzWhizz = new FizzBuzzWhizz();
         int number = 35;
@@ -144,7 +144,7 @@ public class FuzzBuzzWhizzTest {
         String result = fizzBuzzWhizz.getFizzBuzz(number);
 
         //then
-        assertThat(result, is("BuzzWhizz"));
+        assertThat(result, is("Fizz"));
     }
 
     @Test
