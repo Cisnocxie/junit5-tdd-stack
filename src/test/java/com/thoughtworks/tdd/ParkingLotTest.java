@@ -35,12 +35,7 @@ public class ParkingLotTest {
     public void should_get_the_right_car_when_unpark_given_park_receipt() {
         ParkingLot parkingLot = new ParkingLot(1);
         Car theCar = new Car();
-        Receipt receipt = null;
-        try {
-            receipt = parkingLot.park(theCar);
-        } catch (Exception e) {
-            fail("should park successfully");
-        }
+        Receipt receipt = parkingLot.park(theCar);
 
         assertThat(parkingLot.unpark(receipt), is(theCar));
     }
@@ -60,5 +55,40 @@ public class ParkingLotTest {
         assertThat(parkingLot.unpark(anotherReceipt), not(theCar));
     }
 
+    @Test
+    public void should_be_true_when_call_isFull_given_parking_lot_is_full() {
+        ParkingLot parkingLot = new ParkingLot(0);
 
+        assertThat(parkingLot.isFull(), is(true));
+    }
+
+    @Test
+    public void should_be_false_when_call_isFull_given_parking_lot_is_not_full() {
+        ParkingLot parkingLot = new ParkingLot(1);
+
+        assertThat(parkingLot.isFull(), is(false));
+    }
+
+    @Test
+    public void should_be_false_when_call_isFull_given_full_parking_lot_take_out_of_a_car() {
+        ParkingLot parkingLot = new ParkingLot(1);
+        Car car = new Car();
+        Receipt receipt = parkingLot.park(car);
+        parkingLot.unpark(receipt);
+        assertThat(parkingLot.isFull(), is(false));
+    }
+
+    @Test
+    public void should_be_true_when_call_park_again_given_full_parking_lot_take_out_of_a_car() {
+        ParkingLot parkingLot = new ParkingLot(1);
+        Car car = new Car();
+        Receipt receipt = parkingLot.park(car);
+        parkingLot.unpark(receipt);
+
+        try {
+            parkingLot.park(new Car());
+        } catch (ParkingFullException e) {
+            fail("should park successfully");
+        }
+    }
 }

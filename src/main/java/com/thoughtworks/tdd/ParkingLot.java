@@ -14,7 +14,7 @@ public class ParkingLot {
         carList = new HashMap<Receipt, Car>();
     }
 
-    public Receipt park(Car car) throws ParkingFullException {
+    public Receipt park(Car car) {
         if (carList.size() == size) {
             throw new ParkingFullException();
         }
@@ -25,5 +25,9 @@ public class ParkingLot {
 
     public Car unpark(Receipt receipt) {
         return carList.remove(receipt);
+    }
+
+    public boolean isFull() {
+        return carList.size() == size;
     }
 }
