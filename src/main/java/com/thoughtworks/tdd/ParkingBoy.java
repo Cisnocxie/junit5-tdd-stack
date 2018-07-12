@@ -1,9 +1,9 @@
 package com.thoughtworks.tdd;
 
-public class ParkingLotAdmin {
+public class ParkingBoy {
     private ParkingLot[] parkingLots;
 
-    public ParkingLotAdmin(ParkingLot[] parkingLots) {
+    public ParkingBoy(ParkingLot[] parkingLots) {
         this.parkingLots = parkingLots;
     }
 
