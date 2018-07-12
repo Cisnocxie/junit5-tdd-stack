@@ -164,4 +164,29 @@ public class ParkingLotTest {
 
         }
     }
+
+    @Test
+    public void should_park_successfully_when_call_park_given_two_car() {
+        ParkingLotAdmin parkingLotAdmin = new ParkingLotAdmin(new ParkingLot[] {new ParkingLot(1), new ParkingLot(1)});
+
+        try {
+            parkingLotAdmin.park(new Car());
+            parkingLotAdmin.park(new Car());
+        } catch (ParkingFullException e) {
+            fail("should park successfully");
+        }
+    }
+
+    @Test
+    public void should_park_sequentially_when_call_park_given_two_car() {
+        ParkingLot p1 = new ParkingLot(1);
+        ParkingLot p2 = new ParkingLot(1);
+        ParkingLotAdmin parkingLotAdmin  = new ParkingLotAdmin(new ParkingLot[] {p1, p2});
+        Car c1 = new Car();
+        Car c2 = new Car();
+        Receipt r1 = parkingLotAdmin.park(c1);
+        Receipt r2 = parkingLotAdmin.park(c2);
+
+        assertThat(c1 == p1.unpark(r1) && c2 == p2.unpark(r2), is(true));
+    }
 }
