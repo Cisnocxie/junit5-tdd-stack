@@ -91,4 +91,77 @@ public class ParkingLotTest {
             fail("should park successfully");
         }
     }
+
+    @Test
+    public void should_park_successfully_when_call_park_given_parking_lots_is_not_full() {
+        ParkingLotAdmin parkingLots = new ParkingLotAdmin(new ParkingLot[] {new ParkingLot(0), new ParkingLot(1)});
+        Car car = new Car();
+
+        try {
+            Receipt receipt = parkingLots.park(car);
+        } catch (ParkingFullException e) {
+            fail("should park successfully");
+        }
+    }
+
+    @Test
+    public void should_park_unsuccessfully_when_call_park_given_parking_lots_is_full() {
+        ParkingLotAdmin parkingLots = new ParkingLotAdmin(new ParkingLot[] {new ParkingLot(0), new ParkingLot(0)});
+        Car car = new Car();
+
+        try {
+            Receipt receipt = parkingLots.park(car);
+            fail("should park unsuccessfully");
+        } catch (ParkingFullException e) {
+
+        }
+    }
+
+    @Test
+    public void should_get_the_right_car_when_call_unpark_given_receipt_of_the_car() {
+        ParkingLotAdmin parkingLots = new ParkingLotAdmin(new ParkingLot[] {new ParkingLot(0), new ParkingLot(1)});
+        Car car = new Car();
+
+        Receipt receipt = parkingLots.park(car);
+        assertThat(parkingLots.unpark(receipt), is(car));
+    }
+
+    @Test
+    public void should_get_the_wrong_car_when_call_unpark_given_another_receipt() {
+        ParkingLotAdmin parkingLots = new ParkingLotAdmin(new ParkingLot[] {new ParkingLot(0), new ParkingLot(1)});
+        Car car = new Car();
+        Receipt receipt = parkingLots.park(car);
+        Receipt anotherReceipt = new Receipt();
+
+        assertThat(parkingLots.unpark(anotherReceipt), not(car));
+    }
+
+    @Test
+    public void should_park_successfully_when_call_park_again_given_full_parking_lot_take_out_a_car() {
+        ParkingLotAdmin parkingLots = new ParkingLotAdmin(new ParkingLot[] {new ParkingLot(0), new ParkingLot(1)});
+        Car car = new Car();
+        Receipt receipt = parkingLots.park(car);
+        parkingLots.unpark(receipt);
+
+        try {
+            parkingLots.park(new Car());
+        } catch (ParkingFullException e) {
+            fail("should park successfully");
+        }
+    }
+
+    @Test
+    public void should_park_unsuccessfully_when_call_park_again_given_wrong_receipt_for_full_parking_lot() {
+        ParkingLotAdmin parkingLots = new ParkingLotAdmin(new ParkingLot[] {new ParkingLot(0), new ParkingLot(1)});
+        Car car = new Car();
+        Receipt receipt = parkingLots.park(car);
+        parkingLots.unpark(new Receipt());
+
+        try {
+            parkingLots.park(new Car());
+            fail("should park successfully");
+        } catch (ParkingFullException e) {
+
+        }
+    }
 }
